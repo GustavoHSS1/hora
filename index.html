@@ -26,14 +26,19 @@
         .timer{display:flex;flex-direction:column;align-items:center;gap:8px;color:#111}
         .timer .days{font-weight:800;font-size:64px;line-height:1}
         .timer .clock{font-weight:700;font-size:36px}
+        .timer.celebration .days{color:#ff6b6b;font-size:80px}
+        .timer.celebration .clock{color:#ff6b6b;font-size:48px}
         @media(max-width:480px){
             .timer .days{font-size:42px}
             .timer .clock{font-size:24px}
+            .timer.celebration .days{font-size:56px}
+            .timer.celebration .clock{font-size:32px}
             main{padding:20px}
             h1{font-size:20px}
         }
     </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
     <script src="index.js"></script>
 </body>
 </html>

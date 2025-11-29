@@ -1,6 +1,7 @@
 const ano = new Date().getFullYear();
 // Novembro é mês 10 (0-based)
 const dataEvento1 = new Date(ano, 10, 29, 0, 0, 0);
+let celebracaoAtivada = false;
 
 function calcularTempoFaltando(dataFutura) {
     const agora = new Date();
@@ -16,6 +17,20 @@ function calcularTempoFaltando(dataFutura) {
     return { days, hours, minutes, seconds, finished: false };
 }
 
+function dispararConfete() {
+    if (!window.confetti) return;
+    
+    // Dispara múltiplos confetes em locais aleatórios
+    for (let i = 0; i < 5; i++) {
+        confetti({
+            particleCount: 80,
+            spread: 70,
+            origin: { x: Math.random(), y: Math.random() * 0.5 },
+            colors: ['#ff6b6b', '#ff8c42', '#ffd93d', '#6bcf7f', '#4d96ff']
+        });
+    }
+}
+
 function formatClock(t) {
     return `${String(t.hours).padStart(2, '0')}:${String(t.minutes).padStart(2, '0')}:${String(t.seconds).padStart(2, '0')}`;
 }
@@ -27,10 +42,18 @@ function atualizarContadores() {
     if (!el1) return;
 
     if (t1.finished) {
-        el1.innerHTML = `<div class="days">0 d</div><div class="clock">Já passou</div>`;
+        el1.classList.add('celebration');
+        if (!celebracaoAtivada) {
+            celebracaoAtivada = true;
+            dispararConfete();
+            // Dispara confetes periodicamente enquanto a página estiver aberta
+            setInterval(dispararConfete, 2000);
+        }
+        el1.innerHTML = `<div class="days">🎉 CHEGOU! 🎉</div><div class="clock">GANDAIA!</div>`;
         return;
     }
 
+    el1.classList.remove('celebration');
     const diasTexto = `${t1.days} ${t1.days === 1 ? 'dia' : 'dias'}`;
     el1.innerHTML = `<div class="days">${diasTexto}</div><div class="clock">${formatClock(t1)}</div>`;
 }
